@@ -19,18 +19,16 @@ function Login() {
 
   const login = async (data) => {
     setError("");
-    console.log(data);
+
     try {
       const session = await authService.login(data);
-      console.log("session" ,session);
+
       if (session) {
-        navigate("/");
         const userData = await authService.getCurrentUser();
-        console.log("userdata",userData);
         if (userData) dispatch(authLogin(userData));
         navigate("/");
       }
-      console.log(session);
+      
     } catch (error) {
       setError(error.message);
     }
