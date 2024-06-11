@@ -1,11 +1,41 @@
-import React from "react";
-
+import React, { useState } from "react";
+import authService from '../appwrite/auth'
 import Inputfun from "../componets/Input";
 import Container from "../componets/Container";
 import { Button } from "@material-tailwind/react";
 import yourtalesimg from "../img/yourtalesimg.png";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import BoxShadow from "../componets/BoxShadow";
+import { login as authLogin } from "../store/authSlice";
+
 
 function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { register, handleSubmit } = useForm();
+  const [error, setError] = useState("");
+
+  const login = async (data) => {
+    setError("");
+    console.log(data);
+    try {
+      const session = await authService.login(data);
+      console.log("session" ,session);
+      if (session) {
+        navigate("/");
+        const userData = await authService.getCurrentUser();
+        console.log("userdata",userData);
+        if (userData) dispatch(authLogin(userData));
+        navigate("/");
+      }
+      console.log(session);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <div className="h-[100vh] bg-[#26252c]  flex justify-center">
       <Container>
@@ -21,21 +51,24 @@ function Login() {
               <h1 className="text-[#ded9d9] font-medium text-2xl">
                 Welcome to <span className="text-yellow-600">YNKNOWTALES</span>
               </h1>
-              <h6 className="text-[#737171] my-4 ">Create your account</h6>
+              <h6 className="text-[#737171] my-4 ">Sign in to your account</h6>
 
-              <div>
-                <Inputfun
-                  variant="standard"
-                  label={"Fullname"}
-                  type={"text"}
-                  color="yellow"
-                />
+              <form onSubmit={handleSubmit(login)}>
                 <Inputfun
                   variant="standard"
                   label={"Email"}
                   type={"text"}
                   className="mt-10"
                   color="yellow"
+                  {...register("email", {
+                    required: true,
+                    validate: {
+                      matchPatern: (value) =>
+                        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
+                          value
+                        ) || "Email address must be a valid address",
+                    },
+                  })}
                 />
                 <Inputfun
                   variant="standard"
@@ -43,36 +76,33 @@ function Login() {
                   type={"password"}
                   className="mt-10"
                   color="yellow"
+                  {...register("password", {
+                    required: true,
+                  })}
                 />
-              </div>
-
+                
               <Button
+                type="submit"
                 fullWidth
                 className="mt-20 bg-[#333147]  text-yellow-600 hover:text-yellow-800 "
               >
-                create an account
+                Log In
               </Button>
+              </form>
+
+
               <h6 className="text-[#737171] my-4 text-center">
-                Already have a account ?{" "}
-                <span className="text-yellow-600 hover:text-yellow-800 cursor-pointer">
-                  Sign in
+                Not having a account ?{" "}
+                <span
+                  className="text-yellow-600 hover:text-yellow-800 cursor-pointer"
+                  onClick={() => navigate("/signup")}
+                >
+                  Sign up
                 </span>
               </h6>
             </div>
             {/* box shadow */}
-            <div
-              className="absolute bg-[#ffff0000] w-40 h-40 rounded-full -bottom-[90px] -right-[155px] "
-              style={{ boxShadow: "0 35px 140px -2px yellow" }}
-            ></div>
-            <div
-              className="absolute bg-[#ffff0000] w-40 h-40 rounded-full -bottom-[90px] -right-[155px] "
-              style={{ boxShadow: "0 35px 140px -2px yellow" }}
-            ></div>
-
-            <div
-              className="absolute bg-[#ffff0000] w-40 h-40 rounded-full -top-[90px] -left-[155px] "
-              style={{ boxShadow: "0 35px 170px -7px yellow" }}
-            ></div>
+            <BoxShadow />
           </div>
         </div>
       </Container>
