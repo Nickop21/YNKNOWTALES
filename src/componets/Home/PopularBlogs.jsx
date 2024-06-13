@@ -4,6 +4,8 @@ import CreateBlog from '../../componets/CreateBlog'
 import PostCard from '../../componets/PostCard'
 import appwriteService from '../../appwrite/config'
 import Container from '../../componets/Container'
+import { Typography } from '@material-tailwind/react'
+import TabsSection from '../TabsSection'
 
 function PopularBlogs() {
     const [posts, setPosts] = useState([])
@@ -34,6 +36,10 @@ function PopularBlogs() {
       <div>
            <div className='w-full py-8'>
               <Container>
+                <TabsSection/>
+               <Typography variant='h2' color='white'>
+                    Blogs
+               </Typography>
                   <div className='flex flex-wrap'>
                       {posts.map((post) => (
                           <div key={post.$id} className='p-2 w-1/4'>

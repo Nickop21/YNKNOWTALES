@@ -21,3 +21,16 @@ background-color: #26252c ;
   transition: left cubic-bezier(0.88, -0.35, 0.565, 1.35) 0.4s;
 
 }
+
+.webkitScroll::-webkit-scrollbar {
+  width: 6px; 
+  height: 12px; 
+}
+.webkitScroll::-webkit-scrollbar-track {
+  background: rgb(18 19 22 / var(--tw-bg-opacity))1;
+  border-radius: 10px; 
+}
+.webkitScroll::-webkit-scrollbar-thumb {
+  background: #FFC107; 
+  border-radius: 10px; 
+}

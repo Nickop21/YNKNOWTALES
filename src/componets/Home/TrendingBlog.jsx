@@ -1,10 +1,24 @@
 import { Typography } from "@material-tailwind/react";
-import React from "react";
+import React, { useState } from "react";
 import Container from "../Container";
 import HighlightsDiv from "../HighlightsDiv";
 import BoxShadow from "../BoxShadow";
+import imgArray from "../../data";
 
 function TrendingBlog() {
+  const [imageSrc, setImageSrc] = useState(imgArray[0]);
+  const [isFading, setIsFading] = useState(false);
+  const [selectedTab ,setSelectedTabs]=useState(0);
+  const handleChangeImage = (newImageSrc,index) => {
+    
+    setIsFading(true);
+    setSelectedTabs(index)
+
+    setTimeout(() => {
+      setImageSrc(newImageSrc);
+      setIsFading(false);
+    }, 500); 
+  };
   return (
     <Container>
       <div className="mt-[100px]">
@@ -16,18 +30,19 @@ function TrendingBlog() {
           {/* big img */}
           <div className="w-1/2 px-2 h-full">
             <img
-              className="h-[100%] w-full object-cover object-center rounded-[30px]"
-              src="https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
+              className={`h-[100%] w-full object-cover object-center rounded-[30px] transition-opacity duration-1000 ease-in-out ${isFading ? 'opacity-0' : 'opacity-100'}`}
+              src={imageSrc}
               alt="nature image"
             />
           </div>
 
           {/* small imgs */}
-
-          <div className="flex flex-col gap-5 justify-center w-1/2 px-2 h-full ">
-            <HighlightsDiv />
-            <HighlightsDiv />
-            <HighlightsDiv />
+          <div className="h-full  w-1/2">
+            <div className="flex flex-col gap-4  px-2 mt-3 h-[90%] overflow-y-scroll webkitScroll ">
+              {imgArray.map((data,index) => (
+                <HighlightsDiv bgColor={selectedTab===index ?"bg-[#121316]":"bg-none" } data={data} onChangeData={()=>handleChangeImage(data,index)} />
+              ))}
+            </div>
           </div>
           <BoxShadow />
         </div>
