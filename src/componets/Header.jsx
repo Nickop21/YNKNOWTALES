@@ -6,7 +6,7 @@ import logouticon from "../img/logout.png"
 function Header() {
   return (
     < >
-        <div className="h-[65px] w-full max-w-7xl mx-auto px-6 fixed   bg-white z-50 flex flex-row items-center justify-between rounded-b-lg inset-x-0 top-0 mx-auto ">
+        <div className="h-[65px] w-full max-w-7xl mx-auto px-6 fixed   bg-white shadow-md z-[99999] flex flex-row items-center justify-between rounded-b-lg inset-x-0 top-0 mx-auto ">
           <div className="flex gap-3 ml-9">
             {/* <img className="h-[20px] w-[20px] " src="" alt="YNKOWTALES" /> */}
             <h6 className="font-extrabold text-lg" >

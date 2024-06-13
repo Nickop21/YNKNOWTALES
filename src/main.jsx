@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import store from "./store/store.js";
 import Home from "./pages/Home.jsx";
 import AuthLayout from "./componets/AuthLayout.jsx";
+import CreateBlog from "./componets/CreateBlog.jsx";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,14 @@ const router = createBrowserRouter([
                 </AuthLayout>
             ),
         },
+        {
+          path: "/create-yours-blog",
+          element: (
+              <AuthLayout authentication={true}>
+                  <CreateBlog />
+              </AuthLayout>
+          ),
+      },
       
     ],
 },

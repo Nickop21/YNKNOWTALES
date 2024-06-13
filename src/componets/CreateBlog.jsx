@@ -9,6 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Button } from "@material-tailwind/react";
 import ImageUpload from "./ImageUpload";
+import Header from "./Header";
+import Container from "./Container";
+
 
 function CreateBlog({ blogPost, handleOpen }) {
   const [open, setOpen] = useState(false);
@@ -116,14 +119,20 @@ function CreateBlog({ blogPost, handleOpen }) {
   }, [watch, slugTransform, setValue]);
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap ">
-      <div className="w-full px-2">
+    <div className="bg-white">
+
+    <Container>
+    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap bg-white ">
+      <Header/>
+      <div className="w-full px-2 pt-[100px]">
         {/* {errors && <p>{errors}</p>} */}
         <Inputfun
           label="Title :"
           placeholder="Title"
           color="amber"
           className="mb-4 "
+          minlength="10"
+          maxlength="120"
           {...register("title", { required: true })}
         />
         <Inputfun
@@ -221,6 +230,8 @@ function CreateBlog({ blogPost, handleOpen }) {
         </button> */}
       </div>
     </form>
+    </Container>
+    </div>
   );
 }
 
