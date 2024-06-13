@@ -13,4 +13,11 @@ background-color: #26252c ;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.colorTransition{
+  transition: color ease 0.3s;
 
+}
+.tabTransition{
+  transition: left cubic-bezier(0.88, -0.35, 0.565, 1.35) 0.4s;
+
+}
