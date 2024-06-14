@@ -1,21 +1,34 @@
 import { Typography } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../Container";
 import HighlightsDiv from "../HighlightsDiv";
 import BoxShadow from "../BoxShadow";
 import imgArray from "../../data";
+import { useSelector } from "react-redux";
+import appwriteService from "../../appwrite/config";
 
 function Highlight() {
   const [imageSrc, setImageSrc] = useState(imgArray[0]);
   const [isFading, setIsFading] = useState(false);
   const [selectedTab ,setSelectedTabs]=useState(0);
+  const [loading, setLoading] = useState(true)
+  const [PostsDatastate ,setPostsDatastate] =useState([])
+  const {PostsData} =useSelector((state)=>state.postSlice)
+  
+  useEffect(() => {
+    setPostsDatastate(PostsData)
+  }, [PostsData])
+  
+
   const handleChangeImage = (newImageSrc,index) => {
     
     setIsFading(true);
     setSelectedTabs(index)
 
+   
+    
     setTimeout(() => {
-      setImageSrc(newImageSrc);
+      setImageSrc(appwriteService.getfilePreview(newImageSrc.featureImage));
       setIsFading(false);
     }, 500); 
   };
@@ -26,7 +39,7 @@ function Highlight() {
           Highlights
         </Typography>
 
-        <div className="flex flex-col md:flex-row h-[400px]  mt-8 p-5 relative overflow-hidden rounded-[20px]">
+          <div className="flex flex-col md:flex-row h-[400px]  mt-8 p-5 relative overflow-hidden rounded-[20px]">
           {/* big img */}
           <div className="md:w-[55%] px-2 h-full">
             <img
@@ -39,8 +52,8 @@ function Highlight() {
           {/* small imgs */}
           <div className="h-full  md:w-[20%]">
             <div className="flex md:flex-col md:gap-4  px-2 mt-3 h-full md:h-[90%] overflow-x-scroll md:overflow-y-scroll md:overflow-x-hidden webkitScroll ">
-              {imgArray.map((data,index) => (
-                <HighlightsDiv bgColor={selectedTab===index ?"bg-[#121316]":"bg-none" } data={data} onChangeData={()=>handleChangeImage(data,index)} />
+              {PostsDatastate.map((data,index) => (
+                <HighlightsDiv key={index} bgColor={selectedTab===index ?"bg-[#121316]":"bg-none" } data={data} onChangeData={()=>handleChangeImage(data,index)} />
               ))}
             </div>
           </div>

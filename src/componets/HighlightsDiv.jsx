@@ -1,7 +1,14 @@
 import { Rating, Typography } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import appwriteService from "../appwrite/config";
+
 
 function HighlightsDiv({ bgColor, data, onChangeData }) {
+  const [imgurl,setImgurl]=useState("");
+  useEffect(() => {
+    setImgurl(appwriteService.getfilePreview(data.featureImage))    
+  }, [data])
+  
   const handleChangeClick = () => {
     onChangeData();
   };
@@ -13,7 +20,7 @@ function HighlightsDiv({ bgColor, data, onChangeData }) {
     
       <img
         className="h-[30px] md:h-[60px]  w-24 object-cover object-center rounded-[10px]"
-        src={data}
+        src={imgurl}
         alt="nature image"
       />
       <div>
