@@ -23,8 +23,8 @@ background-color: #26252c ;
 }
 
 .webkitScroll::-webkit-scrollbar {
-  width: 6px; 
-  height: 12px; 
+  width: 3px; 
+  height: 3px; 
 }
 .webkitScroll::-webkit-scrollbar-track {
   background: rgb(18 19 22 / var(--tw-bg-opacity))1;
@@ -33,4 +33,13 @@ background-color: #26252c ;
 .webkitScroll::-webkit-scrollbar-thumb {
   background: #FFC107; 
   border-radius: 10px; 
+}
+input::-webkit-file-upload-button{
+  background-color: #FFC107;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
 }

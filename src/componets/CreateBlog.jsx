@@ -153,7 +153,7 @@ function CreateBlog({ blogPost, handleOpen }) {
           defaultValue={getValues("content")}
         />
       </div>
-      <div className="w-full px-2 my-6 flex items-center justify-between flex-col gap-5">
+      <div className="w-full px-2 my-6 flex  items-center justify-between flex-col gap-5">
         {/* <Inputfun
           label="Featured Image :"
           type="file"
@@ -177,8 +177,10 @@ function CreateBlog({ blogPost, handleOpen }) {
           className="mb-4 hidden"
           {...register("status", { required: true })}
         />
-        <label htmlFor="category" className="text-start">
-          Category
+        <div className="w-full">
+
+        <label htmlFor="category" className=" font-extrabold text-xl">
+         <span cla>Cate</span><span className="text-amber-500">gory</span>
         </label>
         <Select
           options={[
@@ -187,18 +189,13 @@ function CreateBlog({ blogPost, handleOpen }) {
             "Hobbies",
             "others"]}
           label="category"
-          className="mb-4 "
+          className="mb-4  mt-5"
           {...register("category", { required: true })}
         />
         
-        <div className="flex flex-col items-center border p-6 rounded-lg w-80 mx-auto">
-          <label
-            htmlFor="fileInput"
-            className="inline-block px-4 py-2 bg-amber-500 text-white rounded cursor-pointer mb-4"
-           
-          >
-            Choose an Image
-          </label>
+        </div>
+        <div className="flex  flex-col gap-4  items-center border p-6 rounded-lg w-80 mx-auto">
+
           <input
             type="file"
             id="fileInput"

@@ -21,7 +21,7 @@ function TabsSection() {
     // onTabChange(tab,index);
     }
     return (
-    <div className="w-full h-[60px] bg-[#121316] rounded-2xl mb-7 flex items-center justify-center ">
+    <div className="w-full h-[60px] border-b-2 bg-[#121316] rounded-2xl mb-7 flex items-center justify-center ">
 
     <div className="w-full h-[40px] relative   overflow-x-auto  whitespace-nowrap mx-4 flex items-center ">
       {tabHeaderData.map((data,index) => (

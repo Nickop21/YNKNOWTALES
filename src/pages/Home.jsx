@@ -7,7 +7,9 @@ import Container from '../componets/Container'
 import HeroSection from "../componets/Home/HeroSection";
 import Header from '../componets/Header'
 import PopularBlogs from '../componets/Home/PopularBlogs'
-import TrendingBlog from '../componets/Home/TrendingBlog'
+
+import Highlight from '../componets/Home/Highlights'
+import Footer from '../componets/Footer'
 
 
 function Home() {
@@ -16,8 +18,9 @@ function Home() {
   <div>
   <Header/>
  <HeroSection/>
- <TrendingBlog/>
+ <Highlight/>
 <PopularBlogs/>
+<Footer/>
 
 
   </div>

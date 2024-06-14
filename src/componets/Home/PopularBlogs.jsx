@@ -36,10 +36,10 @@ function PopularBlogs() {
       <div>
            <div className='w-full py-8'>
               <Container>
-                <TabsSection/>
-               <Typography variant='h2' color='white'>
+               <Typography variant='h2' color='amber' className='mb-5'>
                     Blogs
                </Typography>
+                <TabsSection/>
                   <div className='flex flex-wrap'>
                       {posts.map((post) => (
                           <div key={post.$id} className='p-2 '>
