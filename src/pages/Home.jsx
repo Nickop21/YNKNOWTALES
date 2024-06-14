@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import RTE from '../componets/RTE'
-import CreateBlog from '../componets/CreateBlog'
+import CreateBlog from './CreateBlog'
 import PostCard from '../componets/PostCard'
 import appwriteService from '../appwrite/config'
 import Container from '../componets/Container'
