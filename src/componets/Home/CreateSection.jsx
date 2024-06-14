@@ -8,7 +8,7 @@ import {
   DialogBody,
   DialogFooter,
 } from "@material-tailwind/react";
-import CreateBlog from "../CreateBlog";
+import CreateBlog from "../../pages/CreateBlog";
 
 export default function CreateSection() {
   const [open, setOpen] = useState(false);
