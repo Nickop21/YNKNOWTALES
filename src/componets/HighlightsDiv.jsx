@@ -14,7 +14,7 @@ function HighlightsDiv({ bgColor, data, onChangeData }) {
   };
   return (
     <div
-      className={`h-[100px] md:h-auto w-[300px] md:w-full flex flex-col md:flex-row gap-5 items-center md:ml-4 ${bgColor} rounded-md px-3 py-3 transition-colors duration-1000 ease-in-out `}
+      className={`h-[100px] md:h-auto w-[300px] md:w-full flex flex-col md:flex-row justify-center items-center cursor-pointer gap-5 items-center md:ml-4 ${bgColor} rounded-md px-3 py-3 transition-colors duration-1000 ease-in-out hover:bg-[#1213162f]`}
       onClick={handleChangeClick}
     >
     
@@ -24,7 +24,7 @@ function HighlightsDiv({ bgColor, data, onChangeData }) {
         alt="nature image"
       />
       <div>
-        <Typography variant="h6" color="white" className="text-sm">
+        <Typography variant="h6" color="white" className="text-sm hidden">
           lifestye
         </Typography>
         {/* <Rating value={4} /> */}

@@ -36,14 +36,14 @@ function Highlight() {
     <Container>
       <div className="mt-[100px]">
         <Typography variant="h2" color="amber" className="mb-2">
-          Highlights
+          High<span className="text-white">lights</span>
         </Typography>
 
-          <div className="flex flex-col md:flex-row h-[400px]  mt-8 p-5 relative overflow-hidden rounded-[20px]">
+          <div className="flex flex-col md:flex-row md:h-[400px] gap-10 md:gap-0  mt-8 p-5 relative overflow-hidden rounded-[20px] md:justify-around" >
           {/* big img */}
-          <div className="md:w-[55%] px-2 h-full">
+          <div className="h-[250px] w-[100%] md:w-[40%] px-5 md:h-full">
             <img
-              className={`h-[100%] w-full object-cover object-center rounded-[30px] transition-opacity duration-1000 ease-in-out ${isFading ? 'opacity-0' : 'opacity-100'}`}
+              className={`h-[100%] w-full object-cover md:object-fill object-center rounded-[30px] transition-opacity duration-1000 ease-in-out ${isFading ? 'opacity-0' : 'opacity-100'}`}
               src={imageSrc}
               alt="nature image"
             />
