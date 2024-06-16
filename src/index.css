@@ -7,39 +7,116 @@
 
   /* color-scheme: light dark; */
 
-background-color: #26252c ;
+  background-color: #26252c;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.colorTransition{
+.colorTransition {
   transition: color ease 0.3s;
-
 }
-.tabTransition{
+.tabTransition {
   transition: left cubic-bezier(0.88, -0.35, 0.565, 1.35) 0.4s;
-
 }
 
 .webkitScroll::-webkit-scrollbar {
-  width: 3px; 
-  height: 3px; 
+  width: 3px;
+  height: 3px;
 }
 .webkitScroll::-webkit-scrollbar-track {
-  background: rgb(18 19 22 / var(--tw-bg-opacity))1;
-  border-radius: 10px; 
+  background: rgb(18 19 22 / var(--tw-bg-opacity)) 1;
+  border-radius: 10px;
 }
 .webkitScroll::-webkit-scrollbar-thumb {
-  background: #FFC107; 
-  border-radius: 10px; 
+  background: #ffc107;
+  border-radius: 10px;
 }
-input::-webkit-file-upload-button{
-  background-color: #FFC107;
+input::-webkit-file-upload-button {
+  background-color: #ffc107;
   outline: none;
   border: none;
   border-radius: 5px;
   padding: 10px;
   color: white;
   cursor: pointer;
+}
+.notification {
+  transform: translateX(100%);
+  animation: noti 3s forwards ease-in;
+}
+@keyframes noti {
+  30% {
+    transform: translateX(0);
+  }
+  60% {
+    transform: translateX(0);
+  }
+  80% {
+    transform: translateX(0);
+  }
+
+  90% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.pl {
+	display: block;
+	width:60px;
+	height: 60px;
+}
+.pl__ring, .pl__ball {
+	animation: ring 2s ease-out infinite;
+}
+.pl__ball {
+	animation-name: ball;
+}
+
+/* Dark theme  */
+
+/* Animation */
+@keyframes ring {
+	from {
+		stroke-dasharray: 0 257 0 0 1 0 0 258;
+	}
+	25% {
+		stroke-dasharray: 0 0 0 0 257 0 258 0;
+	}
+	50%, to {
+		stroke-dasharray: 0 0 0 0 0 515 0 0;
+	}
+}
+@keyframes ball {
+	from, 50% {
+		animation-timing-function: ease-in;
+		stroke-dashoffset: 1;
+	}
+	64% {
+		animation-timing-function: ease-in;
+		stroke-dashoffset: -109;
+	}
+	78% {
+		animation-timing-function: ease-in;
+		stroke-dashoffset: -145;
+	}
+	92% {
+		animation-timing-function: ease-in;
+		stroke-dashoffset: -157;
+	}
+	57%, 71%, 85%, 99%, to {
+		animation-timing-function: ease-out;
+		stroke-dashoffset: -163;
+	}
 }
