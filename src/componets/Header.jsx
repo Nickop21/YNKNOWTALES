@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Avatar, Button, Typography } from "@material-tailwind/react";
-import logouticon from "../img/logout.png"
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../store/authSlice";
 import authservice from "../appwrite/auth";
+import Loader from "./Loader";
 
 
 function Header() {
   const navigate=useNavigate()
   const dispatch=useDispatch()
+  const [loading, setloading] = useState(false)
 
   function logouthandler() {
-    dispatch(logout())
     authservice.deleteSession()
+    setloading(true)
+    setTimeout(() => {
+      dispatch(logout())
+      setloading(false)
+    }, 500);
     
   }
   return (
@@ -31,13 +36,14 @@ function Header() {
           <Button color="amber" className=" text-black" onClick={()=>logouthandler()}>
              Logout
             </Button>
-            {/* <Avatar src={logouticon} alt="logout" /> */}
+    
             <Avatar
               src="https://docs.material-tailwind.com/img/face-2.jpg"
               alt="avatar"
             />
           </div>
         </div>
+        {loading && <Loader/>}
     </>
   );
 }

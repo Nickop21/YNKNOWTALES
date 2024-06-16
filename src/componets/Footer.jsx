@@ -10,10 +10,10 @@ const currentYear = new Date().getFullYear();
 
   return (
   <>
-    <footer className="relative w-full">
+    <footer className="relative w-full bg-white">
       <Container>
       
-        <div className="mt-12 flex w-full flex-col items-center justify-center border-t border-blue-gray-50 py-4 md:flex-row md:justify-between bg-white p-7 rounded-t-xl">
+        <div className="flex w-full flex-col items-center justify-center border py-4 md:flex-row md:justify-between  p-7 ">
           <Typography
             variant="small"
             className="mb-4 text-center font-normal text-blue-gray-900 md:mb-0"
