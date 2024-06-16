@@ -1,30 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import RTE from '../componets/RTE'
-import CreateBlog from './CreateBlog'
-import PostCard from '../componets/PostCard'
-import appwriteService from '../appwrite/config'
-import Container from '../componets/Container'
+import React from "react";
 import HeroSection from "../componets/Home/HeroSection";
-import Header from '../componets/Header'
-import PopularBlogs from '../componets/Home/PopularBlogs'
+import PopularBlogs from "../componets/Home/PopularBlogs";
 
-import Highlight from '../componets/Home/Highlights'
-import Footer from '../componets/Footer'
+import Highlight from "../componets/Home/Highlights";
 
 
 function Home() {
-
   return (
-  <div>
-  <Header/>
- <HeroSection/>
- <Highlight/>
-<PopularBlogs/>
-<Footer/>
-
-
-  </div>
-  )
+    <div>
+      <HeroSection />
+      <Highlight />
+      <PopularBlogs />
+    </div>
+  );
 }
 
-export default Home
+export default Home;
