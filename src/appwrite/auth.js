@@ -43,6 +43,16 @@ export class Authservice{
 
         return null;
     }
+    async deleteSession(){
+        try {
+          // Attempt to delete the current session
+         return await this.account.deleteSession('current');
+          
+        } catch (err) {
+          console.error('Error deleting session:', err); // Log the full error
+          
+        }
+      }
 }
 const authservice=new Authservice();
 
