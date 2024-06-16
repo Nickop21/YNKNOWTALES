@@ -10,7 +10,9 @@ import { Provider } from "react-redux";
 import store from "./store/store.js";
 import Home from "./pages/Home.jsx";
 import AuthLayout from "./componets/AuthLayout.jsx";
-import CreateBlog from "./componets/CreateBlog.jsx";
+import CreateBlog from "./pages/CreateBlog.jsx";
+import BlogPage from "./pages/BlogPage.jsx";
+import PageNotFound from "./pages/PageNotFound.jsx";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +49,21 @@ const router = createBrowserRouter([
               </AuthLayout>
           ),
       },
+      {
+        path: "/blog/:id",
+        element: (
+            <AuthLayout authentication={true}>
+                <BlogPage/>
+            </AuthLayout>
+        ),
+    },
+    {
+      path: "*",
+      element: (
+              <PageNotFound/>
+        
+      ),
+  },
       
     ],
 },
