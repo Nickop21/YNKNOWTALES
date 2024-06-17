@@ -1,3 +1,4 @@
+import { Typography } from '@material-tailwind/react';
 import React, { forwardRef, useState } from 'react';
 
 const ImageUpload =  forwardRef(({ register }, ref) => {
@@ -22,11 +23,10 @@ const ImageUpload =  forwardRef(({ register }, ref) => {
 
     return (
         <div className="flex flex-col items-center border p-6 rounded-lg w-80 mx-auto">
-            <label htmlFor="fileInput" className="inline-block px-4 py-2 bg-amber-500 text-white rounded cursor-pointer mb-4">
-                Choose an Image
-            </label>
+           
             <input
                 type="file"
+                label="llm"
                 id="fileInput"
                 onChange={handleImageChange}
                 className="hidden"
