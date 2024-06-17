@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import authService from '../appwrite/auth';
+import authService from "../appwrite/auth";
 import Inputfun from "./Input";
 import Container from "./Container";
 import { Button } from "@material-tailwind/react";
@@ -9,61 +9,63 @@ import BoxShadow from "./BoxShadow";
 import { useDispatch } from "react-redux";
 import Loader from "./Loader";
 import Alertmssg from "./Alertmssg";
-import yourtalesimg from "../img/yourtalesimg.png"
-import {login as authLogin} from "../store/authSlice"
+import yourtalesimg from "../img/yourtalesimg.png";
+import { login as authLogin } from "../store/authSlice";
 
 function AuthForm({ isSignup }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, handleSubmit,formState: { errors }  } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [successMssg,setSucessMssg]=useState(false)
+  const [successMssg, setSucessMssg] = useState(false);
 
   const onSubmit = async (data) => {
     setError("");
-    setLoading(true)
+    setLoading(true);
 
     try {
       if (isSignup) {
         const userData = await authService.createAccount(data);
         if (userData) {
-        //   const currentUserData = await authService.getCurrentUser();
-            setSucessMssg(true)
-            setTimeout(() => {
-                navigate("/login");
-                
-                setSucessMssg(false)
-            }, 2000);
+          //   const currentUserData = await authService.getCurrentUser();
+          setSucessMssg(true);
+          setTimeout(() => {
+            navigate("/login");
+
+            setSucessMssg(false);
+          }, 2000);
         }
       }
-    //   login
+      //   login
       else {
         const session = await authService.login(data);
         if (session) {
-            const userData = await authService.getCurrentUser();
-            if (userData) dispatch(authLogin(userData));
-            navigate("/");
-          }     
+          const userData = await authService.getCurrentUser();
+          if (userData) dispatch(authLogin(userData));
+          navigate("/");
+        }
       }
     } catch (error) {
       setError(error.message);
-    }
-    finally{
-        setLoading(false); 
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="h-[100vh] bg-[#26252c] flex justify-center">
+    <div className="h-[100vh]  flex justify-center items-center">
       <Container>
-        
-        <div className="w-[100%] flex h-[100%] py-[100px]">
-          <div className="w-[50%] flex justify-center">
+        <div className="w-[100%] h-[600px]  flex justify-center ">
+          <div className="w-[50%] justify-center hidden md:flex">
             <img src={yourtalesimg} alt="" />
           </div>
-          <div className="w-[50%] relative bg-[#121316] flex items-center justify-center flex-col rounded-2xl overflow-hidden">
-            <div className="w-[80%] text-left">
+          <div className="relative w-full md:w-[50%] relative bg-[#121316] shadow-amber-300 shadow-sm  flex items-center justify-center flex-col rounded-2xl z-10 overflow-hidden">
+            <div className=" relative w-[80%] text-left  ">
               <h1 className="text-[#ded9d9] font-medium text-2xl">
                 {isSignup ? "Welcome to" : "Welcome back to"}{" "}
                 <span className="text-yellow-600">YNKNOWTALES</span>
@@ -91,8 +93,9 @@ function AuthForm({ isSignup }) {
                     required: true,
                     validate: {
                       matchPattern: (value) =>
-                        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
-                        "Email address must be a valid address",
+                        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
+                          value
+                        ) || "Email address must be a valid address",
                     },
                   })}
                 />
@@ -114,12 +117,21 @@ function AuthForm({ isSignup }) {
               </form>
 
               {error && (
-                <Alertmssg textMssg={error} color="#f73939" bgColor="#a3404061" type="error" />
-               
+                <Alertmssg
+                  textMssg={error}
+                  color="#f73939"
+                  bgColor="#a3404061"
+                  type="error"
+                />
               )}
               {successMssg && (
-            <Alertmssg textMssg={"Account Created succesfully"} color="white" bgColor="#22DD22" type="success" />
-            )}
+                <Alertmssg
+                  textMssg={"Account Created succesfully"}
+                  color="white"
+                  bgColor="#22DD22"
+                  type="success"
+                />
+              )}
 
               <h6 className="text-[#737171] my-4 text-center">
                 {isSignup ? (
@@ -148,7 +160,7 @@ function AuthForm({ isSignup }) {
             <BoxShadow />
           </div>
         </div>
-        {loading && <Loader/>}
+        {loading && <Loader />}
       </Container>
     </div>
   );
