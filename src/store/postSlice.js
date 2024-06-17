@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   PostsData:[],
-  PostsCategoryData:[]
+  PostsCategoryData:[],
+  category:"All"
 }
 
 export const postSlice = createSlice({
@@ -16,9 +17,13 @@ export const postSlice = createSlice({
       state.PostsCategoryData=action.payload
   },
 
+  CurrentCategory:(state,action) =>{
+    state.category=action.payload
+  }
+
   },
 })
 
-export const {AllPost,CategoryPost} = postSlice.actions
+export const {AllPost,CategoryPost,CurrentCategory} = postSlice.actions
 
 export default postSlice.reducer
