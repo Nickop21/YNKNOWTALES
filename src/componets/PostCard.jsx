@@ -1,38 +1,37 @@
-import React from 'react'
+import React from "react";
+import "../../src/card.css"
 import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Typography,
-    Button,
-  } from "@material-tailwind/react";
-import appwriteService from '../appwrite/config';
-   
+  Typography,
+  Button,
+} from "@material-tailwind/react";
+import appwriteService from "../appwrite/config";
+import { useNavigate } from "react-router-dom";
+function PostCard({ $id, title, featureImage, content }) {
+  const navigate = useNavigate();
+  return (
+ 
+    <>
 
-function PostCard({$id, title, featureImage,content}) {
-    return (
-        <Card className="mt-6 w-96  h-[400px] relative">
-          <CardHeader color="blue-gray" className="relative overflow-visible h-60 ">
-            <img
-              src={appwriteService.getfilePreview(featureImage)}
-              alt={title}
-              className=' object-cover object-center w-full h-full max-h-full'
-            />
-          </CardHeader>
-          <CardBody>
-            <Typography variant="h6" color="" className="mb-2">
-              {title}
-            </Typography>
-            {/* <Typography>
-                {content}
-            </Typography> */}
-          </CardBody>
-          <CardFooter className="pt-0">
-            <Button className='absolute bottom-2'>Read More</Button>
-          </CardFooter>
-        </Card>
-      );
+  <div className="card-hover rounded-lg">
+    <div className="card-hover__content">
+      <Typography variant="h6" className="card-hover__title ">
+        {title}
+      </Typography>
+    
+      <Button className="card-hover__link " onClick={() => navigate(`/blog/${featureImage}`)}>
+      <span>Read more</span>
+        <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+        </svg>  
+      </Button>
+    </div>
+    
+    <img src={appwriteService.getfilePreview(featureImage)} 
+    alt={title} className="img-hov rounded-lg"/>
+  </div>
+     
+</>
+  );
 }
 
-export default PostCard
+export default PostCard;
