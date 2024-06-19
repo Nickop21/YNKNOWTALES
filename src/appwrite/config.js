@@ -153,7 +153,7 @@ export class Service {
         compressedFile
       );
     } catch (error) {
-      console.log("uplodefile", error);
+      // console.log("uplodefile", error);
     }
   }
   async deleteFile(fileid) {
@@ -161,7 +161,7 @@ export class Service {
       await this.bucket.deleteFile(conf.appwriteBucketId, fileid);
       return true;
     } catch (error) {
-      console.log("delete file", error);
+      // console.log("delete file", error);
       return false;
     }
   }
