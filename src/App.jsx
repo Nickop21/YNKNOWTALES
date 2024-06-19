@@ -13,31 +13,40 @@ import Footer from "./componets/Footer.jsx";
 import Loader from "./componets/Loader.jsx";
 function App() {
   const [loading, setLoading] = useState(true);
+  const [data, setdata] = useState([])
   const dispatch = useDispatch();
   const location = useLocation();
   const hideHeaderRoutes = ["/login", "/signup"];
 
   useEffect(() => {
-    if (hideHeaderRoutes.includes(location.pathname)) {
-      setLoading(false);
-      return;
-    }
-    authService
-      .getCurrentUser()
-      .then((userData) => {
+    const updateStore = async () => {
+      // to prevent unnecessary hit on login and signup page
+      if (hideHeaderRoutes.includes(location.pathname)) {
+        setLoading(false);
+        return;
+      }
+      
+      try {
+        const userData = await authService.getCurrentUser();
         if (userData) {
+          const PostsData = await appwriteService.getPosts();
+          if (PostsData) {
+            setdata(PostsData);
+            dispatch(AllPost(PostsData.documents));
+          }
           dispatch(login({ userData }));
-          appwriteService.getPosts().then((PostsData) => {
-            if (PostsData) {
-              dispatch(AllPost(PostsData.documents));
-            }
-          });
         } else {
           dispatch(logout());
         }
-      })
-      .finally(() => setLoading(false));
-  }, []);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    updateStore();
+  }, [location.pathname, dispatch]);
 
   return (
     <>
