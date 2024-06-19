@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import authService from "../appwrite/auth";
 import Inputfun from "./Input";
 import Container from "./Container";
-import { Button } from "@material-tailwind/react";
+import { Button, Typography } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import BoxShadow from "./BoxShadow";
@@ -83,6 +83,7 @@ function AuthForm({ isSignup }) {
                     {...register("name", { required: true })}
                   />
                 )}
+                 {errors.name && <p className="text-red-700 text-sm mt-2">Name required</p>}
                 <Inputfun
                   variant="standard"
                   label={"Email"}
@@ -99,6 +100,8 @@ function AuthForm({ isSignup }) {
                     },
                   })}
                 />
+                 {errors.email && <p className="text-red-700 text-sm mt-2">Email required</p>}
+                
                 <Inputfun
                   variant="standard"
                   label={"Password"}
@@ -107,6 +110,8 @@ function AuthForm({ isSignup }) {
                   color="yellow"
                   {...register("password", { required: true })}
                 />
+                {errors.password && <p className="text-red-700 text-sm mt-2">password required</p>}
+
                 <Button
                   type="submit"
                   fullWidth
