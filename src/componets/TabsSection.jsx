@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { CurrentCategory } from "../store/postSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const tabHeaderData = [
     "All",
   "Lifestyle",
@@ -9,17 +12,28 @@ const tabHeaderData = [
 
 
 function TabsSection() {
+const dispatch=useDispatch()
 
 
     const [selectedTab ,setSelectedTabs]=useState(0);
     const [left,setLeft]=useState(0);
+    const {PostsData, category } = useSelector((state) => state.postSlice);
+
+
     const activeTab=(tab,index)=>{
     setLeft(index * 150);
     setTimeout(() => {
         setSelectedTabs(index)
     }, 300);
+   
     // onTabChange(tab,index);
     }
+    useEffect(() => {
+    dispatch(CurrentCategory(tabHeaderData[selectedTab]))
+      
+  
+    }, [selectedTab,category])
+    
     return (
     <div className="w-full h-[60px] border-b-2 bg-[#121316] rounded-2xl mb-7 flex items-center justify-center ">
 
