@@ -9,19 +9,28 @@ import {
   DialogFooter,
 } from "@material-tailwind/react";
 import CreateBlog from "../../pages/CreateBlog";
+import Loader from "../Loader";
 
 export default function CreateSection() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
+  const [loading, setLoading] = useState(false)
   const navigate=useNavigate()
   return (
     <div className="h-[60px] w-full max-w-2xl mx-auto px-6 absolute  bg-white z-50 flex flex-row items-center justify-between rounded-lg inset-x-0 -bottom-[20px] mx-auto ">
       <h6 className="font-extrabold text-lg ">Share <span className="text-amber-600">your stories</span> with us</h6>
 
-      <Button color="amber" className=" text-black" onClick={()=>navigate("/create-yours-blog")}>
+      <Button color="amber" className=" text-black animate-bounce focus:animate-none hover:animate-none" onClick={()=>{
+        setLoading(true),
+        setTimeout(() => {
+          navigate("/create-yours-blog")
+          setLoading(false)
+        }, 300);
+        }
+        }>
         Create post
       </Button>
-     
+     {loading &&<Loader/> }
       {/* dialoge */}
 
       {/* <Dialog
