@@ -95,7 +95,7 @@ function BlogPage() {
                 Similar articles
               </Typography>
 
-              <div className="relative">
+              <div className="relative w-full">
                 {currentpostData.length > 2 && (
                   <img
                     src={Arrow}
