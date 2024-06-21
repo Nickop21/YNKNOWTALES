@@ -7,31 +7,28 @@ import RTE from "../componets/RTE";
 import Select from "../componets/Select";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Button } from "@material-tailwind/react";
+import { Button, Typography } from "@material-tailwind/react";
 import ImageUpload from "../componets/ImageUpload";
 import Header from "../componets/Header";
 import Container from "../componets/Container";
 import Loader from "../componets/Loader";
 import Alertmssg from "../componets/Alertmssg";
 
-function CreateBlog({ blogPost, handleOpen }) {
-  const [open, setOpen] = useState(false);
+function CreateBlog() {
   const [loading, setloading] = useState(false);
   const {
     register,
     handleSubmit,
-    watch,
-    setValue,
     control,
     getValues,
     formState: { errors },
+    clearErrors,
   } = useForm({
     defaultValues: {
-      title: blogPost?.title || "",
-      slug: blogPost?.$id || "",
-      content: blogPost?.content || "",
-      status: blogPost?.status || "active",
-      category: blogPost?.status || "others",
+      title: "",
+      content: "",
+      status: "active",
+      category: "others",
     },
   });
   const navigate = useNavigate();
@@ -39,104 +36,82 @@ function CreateBlog({ blogPost, handleOpen }) {
 
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [sucessmssg, setsucessmssg] = useState(false)
+  const [sucessmssg, setsucessmssg] = useState(false);
+  const [error, seterror] = useState(false);
 
   const handleImageChange = (e) => {
-    console.log("uploded");
     const file = e.target.files[0];
-    console.log(file);
+
     if (file) {
+      clearErrors("featureImage");
       setImage(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result);
       };
       reader.readAsDataURL(file);
-      // if (register.onChange) {
-      //   register.onChange(e);
-      // }
     }
   };
 
   const submit = async (data) => {
+    clearErrors("content");
     setloading(true);
 
-    if (blogPost) {
-      const file = data.featureImage[0]
-        ? await appwriteService.uploadeFile(data.featureImage[0])
-        : null;
+    // if (blogPost) {
+    //   const file = data.featureImage[0]
+    //     ? await appwriteService.uploadeFile(data.featureImage[0])
+    //     : null;
 
-      if (file) {
-        appwriteService.deleteFile(blogPost.featureImage);
-      }
+    //   if (file) {
+    //     appwriteService.deleteFile(blogPost.featureImage);
+    //   }
 
-      const dbPost = await appwriteService.updatePost(blogPost.$id, {
+    //   const dbPost = await appwriteService.updatePost(blogPost.$id, {
+    //     ...data,
+    //     featureImage: file ? file.$id : undefined,
+    //   });
+
+    //   if (dbPost) {
+    //     navigate(`/post/${dbPost.$id}`);
+    //   }
+    // }
+    // else {
+    const file = await appwriteService.uploadeFile(data.featureImage[0]);
+
+    if (file) {
+      const fileId = file.$id;
+      data.featureImage = fileId;
+      console.log("userdata.id", userData.userData.$id);
+      const dbPost = await appwriteService.createPost({
         ...data,
-        featureImage: file ? file.$id : undefined,
+        userId: userData.userData.$id,
       });
 
       if (dbPost) {
-        navigate(`/post/${dbPost.$id}`);
-      }
-    } else {
-      const file = await appwriteService.uploadeFile(data.featureImage[0]);
+        setloading(false);
+        setsucessmssg(true);
 
-      if (file) {
-        const fileId = file.$id;
-        data.featureImage = fileId;
-        console.log("userdata.id", userData.userData.$id);
-        const dbPost = await appwriteService.createPost({
-          ...data,
-          userId: userData.userData.$id,
-        });
-
-        if (dbPost) {
-          setloading(false);
-          setsucessmssg(true)
-          
-          setTimeout(() => {
-            navigate(`/`);
-          }, 1500);
-        }
+        setTimeout(() => {
+          navigate(`/`);
+        }, 1500);
       }
     }
-
-    // handleOpen(setOpen(!open));
+    // }
   };
-
-  const slugTransform = useCallback((value) => {
-    if (value && typeof value === "string")
-      return value
-        .trim()
-        .toLowerCase()
-        .replace(/[^a-zA-Z\d\s]+/g, "-")
-        .replace(/\s/g, "-");
-
-    return "";
-  }, []);
-
-  React.useEffect(() => {
-    const subscription = watch((value, { name }) => {
-      if (name === "title") {
-        setValue("slug", slugTransform(value.title), { shouldValidate: true });
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [watch, slugTransform, setValue]);
 
   return (
     <div className=" bg-white relative">
-     {sucessmssg &&<div className="relative z-[9999999999999999]">
-      <Alertmssg
+      {sucessmssg && (
+        <div className="relative z-[9999999999999999]">
+          <Alertmssg
             textMssg="successfull added"
             color="white"
             bgColor="#22DD22"
             type="success"
-            
           />
-     </div> 
-     }
+        </div>
+      )}
+
       {loading ? (
         <Loader />
       ) : (
@@ -144,7 +119,6 @@ function CreateBlog({ blogPost, handleOpen }) {
           <form onSubmit={handleSubmit(submit)} className="flex flex-wrap  ">
             <Header />
             <div className="w-full px-2 pt-[100px]">
-              {/* {errors && <p>{errors}</p>} */}
               <Inputfun
                 label="Title :"
                 placeholder="Title"
@@ -152,45 +126,30 @@ function CreateBlog({ blogPost, handleOpen }) {
                 className="mb-4 "
                 minLength="10"
                 maxLength="120"
-                {...register("title", { required: true })}
+                {...register("title", { required: "Title is required" })}
               />
-              <Inputfun
-                label="Slug :"
-                placeholder="Slug"
-                className="mb-4 hidden "
-                {...register("slug", { required: true })}
-                onInput={(e) => {
-                  setValue("slug", slugTransform(e.currentTarget.value), {
-                    shouldValidate: true,
-                  });
-                }}
-              />
-              <span cla>Con</span>
-              <span className="text-amber-500">tent</span>
+
+              {errors.title && (
+                <p className="text-red-700 text-sm">
+                  Title required
+                </p>
+              )}
+
+              <label className=" font-extrabold text-xl">
+                <span>write your</span>
+                <span className="text-amber-500">story</span>
+              </label>
               <RTE
                 label=""
                 name="content"
                 control={control}
                 defaultValue={getValues("content")}
+                error={errors.content && errors.content.message}
+                
               />
             </div>
+
             <div className="w-full px-2 my-6 flex  items-center justify-between flex-col gap-5">
-              {/* <Inputfun
-          label="Featured Image :"
-          type="file"
-          className="mb-4"
-          accept="image/png, image/jpg, image/jpeg, image/gif"
-          {...register("featureImage", { required: !blogPost })}
-        /> */}
-              {blogPost && (
-                <div className="w-full mb-4">
-                  <img
-                    src={appwriteService.getfilePreview(blogPost.featureImage)}
-                    alt={blogPost.title}
-                    className="rounded-lg"
-                  />
-                </div>
-              )}
               <Select
                 options={["active", "inactive"]}
                 label="Status"
@@ -200,7 +159,7 @@ function CreateBlog({ blogPost, handleOpen }) {
               />
               <div className="w-full">
                 <label htmlFor="category" className=" font-extrabold text-xl">
-                  <span cla>Cate</span>
+                  <span>Cate</span>
                   <span className="text-amber-500">gory</span>
                 </label>
                 <Select
@@ -212,7 +171,7 @@ function CreateBlog({ blogPost, handleOpen }) {
               </div>
               <div className="flex  flex-col gap-4  items-center border p-6 rounded-lg w-80 mx-auto">
                 <label htmlFor="category" className=" font-extrabold text-xl">
-                  <span cla>Choose</span>
+                  <span >Choose</span>
                   <span className="text-amber-500">Image</span>
                 </label>
                 <input
@@ -220,10 +179,17 @@ function CreateBlog({ blogPost, handleOpen }) {
                   id="fileInput"
                   className=""
                   accept="image/png, image/jpg, image/jpeg, image/gif"
-                  {...register("featureImage", { required: !blogPost })}
+                  {...register(
+                    "featureImage",
+                    { required: true },
+                  )}
                   onChange={handleImageChange}
                 />
-
+                {errors.featureImage && (
+                 <p className="text-red-700 text-sm mt-2">
+                    Image required
+                  </p>
+                )}
                 {preview && (
                   <img
                     src={preview}
@@ -235,14 +201,6 @@ function CreateBlog({ blogPost, handleOpen }) {
               <Button type="submit" color="amber">
                 Submit
               </Button>
-              {/* <button
-          type="submit"
-          bgColor={blogPost ? "bg-green-500" : "amber"}
-          className="w-full"
-        >
-        
-          {blogPost ? "Update" : "Submit"}
-        </button> */}
             </div>
           </form>
         </Container>
