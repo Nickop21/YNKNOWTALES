@@ -4,7 +4,6 @@ import appwriteService from "../../appwrite/config";
 import Container from "../../componets/Container";
 import { Typography } from "@material-tailwind/react";
 import TabsSection from "../TabsSection";
-// import { Pagination } from "../Pagination";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
