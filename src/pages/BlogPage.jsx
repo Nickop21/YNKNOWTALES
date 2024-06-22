@@ -31,9 +31,6 @@ function BlogPage() {
   };
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-    });
     if (PostsData && param) {
       const filteredData = PostsData.filter(
         (data) => data.featureImage === param.id
